@@ -1,244 +1,220 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/index.html b/index.html
-index 3d0b8926ac24665323632259fc4f8b457254160f..ba4b8a65f9c90271cb768b4e91b8edbde025da40 100644
---- a/index.html
-+++ b/index.html
-@@ -1,101 +1,223 @@
- <!-- index.html -->
- <!DOCTYPE html>
- <html lang="en">
- <head>
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-   <title>Sayed.Engineer | Portfolio Hub</title>
-   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-   <style>
-+    :root {
-+      --bg-gradient-dark: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #007BFF);
-+      --bg-gradient-light: linear-gradient(-45deg, #f2f6ff, #e1e6ef, #d7ddf5, #ffffff);
-+      --text-color-dark: #fff;
-+      --text-color-light: #000;
-+      --button-bg-dark: rgba(255, 255, 255, 0.1);
-+      --button-bg-light: rgba(255, 255, 255, 0.6);
-+      --button-hover-dark: rgba(255, 255, 255, 0.3);
-+      --button-hover-light: rgba(255, 255, 255, 0.8);
-+      --container-bg-dark: rgba(255, 255, 255, 0.05);
-+      --container-bg-light: rgba(255, 255, 255, 0.6);
-+    }
-+
-     body {
-       margin: 0;
-       height: 100vh;
-       font-family: 'Inter', sans-serif;
--      color: #fff;
--      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #007BFF);
-+      color: var(--text-color-dark);
-+      background: var(--bg-gradient-dark);
-       background-size: 400% 400%;
-       animation: gradientMove 15s ease infinite;
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-       text-align: center;
-     }
- 
-+    body.light {
-+      color: var(--text-color-light);
-+      background: var(--bg-gradient-light);
-+    }
-+
-+    .theme-toggle {
-+      position: fixed;
-+      top: 15px;
-+      left: 15px;
-+      z-index: 1000;
-+    }
-+
-+    .switch {
-+      position: relative;
-+      display: inline-block;
-+      width: 50px;
-+      height: 24px;
-+    }
-+
-+    .switch input {
-+      opacity: 0;
-+      width: 0;
-+      height: 0;
-+    }
-+
-+    .slider {
-+      position: absolute;
-+      cursor: pointer;
-+      top: 0;
-+      left: 0;
-+      right: 0;
-+      bottom: 0;
-+      background-color: rgba(255, 255, 255, 0.4);
-+      transition: 0.4s;
-+      border-radius: 34px;
-+      backdrop-filter: blur(5px);
-+    }
-+
-+    .slider:before {
-+      position: absolute;
-+      content: "";
-+      height: 18px;
-+      width: 18px;
-+      left: 3px;
-+      bottom: 3px;
-+      background-color: white;
-+      transition: 0.4s;
-+      border-radius: 50%;
-+    }
-+
-+    input:checked + .slider {
-+      background-color: rgba(0,0,0,0.4);
-+    }
-+
-+    input:checked + .slider:before {
-+      transform: translateX(26px);
-+    }
-+
-+    .glass {
-+      background: var(--container-bg-dark);
-+      backdrop-filter: blur(20px);
-+      padding: 3rem 4rem;
-+      border-radius: 20px;
-+    }
-+
-+    body.light .glass {
-+      background: var(--container-bg-light);
-+    }
-+
-     @keyframes gradientMove {
-       0% { background-position: 0% 50%; }
-       50% { background-position: 100% 50%; }
-       100% { background-position: 0% 50%; }
-     }
- 
-     h1 {
-       font-size: 3rem;
-       margin-bottom: 0.5rem;
-     }
- 
-     p {
-       margin-bottom: 2rem;
-       font-size: 1.2rem;
-     }
- 
-     .buttons {
--      background: rgba(255, 255, 255, 0.05);
-+      background: var(--container-bg-dark);
-       backdrop-filter: blur(10px);
-       border-radius: 12px;
-       padding: 2rem 3rem;
-       display: flex;
-       gap: 2rem;
-       flex-wrap: wrap;
-       justify-content: center;
-     }
- 
-+    body.light .buttons {
-+      background: var(--container-bg-light);
-+    }
-+
-     .buttons a {
-       text-decoration: none;
--      color: #fff;
--      background: rgba(255, 255, 255, 0.1);
-+      color: inherit;
-+      background: var(--button-bg-dark);
-       padding: 1rem 2rem;
-       border-radius: 8px;
-       font-weight: 600;
-       transition: background 0.3s ease, transform 0.3s ease;
-     }
- 
-+    body.light .buttons a {
-+      background: var(--button-bg-light);
-+    }
-+
-     .buttons a:hover {
--      background: rgba(255, 255, 255, 0.3);
-+      background: var(--button-hover-dark);
-       transform: translateY(-3px);
-     }
- 
-+    body.light .buttons a:hover {
-+      background: var(--button-hover-light);
-+    }
-+
-     footer {
-       position: fixed;
-       bottom: 10px;
-       font-size: 0.9rem;
-       color: #ddd;
-     }
- 
-+    body.light footer {
-+      color: #333;
-+    }
-+
-     @media (max-width: 600px) {
- h1 { font-size: 2.2rem; }
-       .buttons {
-         flex-direction: column;
-         gap: 1rem;
-       }
-     }
-   </style>
- </head>
--<body>
--  <h1>Welcome to Sayed.Engineer</h1>
--  <p>A portfolio hub for engineers</p>
--  <div class="buttons">
--    <a href="https://farook.sayed.engineer" target="_blank" rel="noopener">Farook</a>
--    <a href="https://fazal.sayed.engineer" target="_blank" rel="noopener">Fazal</a>
-+<body class="dark">
-+  <div class="theme-toggle">
-+    <label class="switch">
-+      <input type="checkbox" id="theme-toggle">
-+      <span class="slider"></span>
-+    </label>
-+  </div>
-+  <div class="glass">
-+    <h1>Welcome to Sayed.Engineer</h1>
-+    <p>A portfolio hub for engineers</p>
-+    <div class="buttons">
-+      <a href="https://farook.sayed.engineer" target="_blank" rel="noopener">Farook</a>
-+      <a href="https://fazal.sayed.engineer" target="_blank" rel="noopener">Fazal</a>
-+    </div>
-   </div>
-   <footer>© 2025 Sayed.Engineer. All rights reserved.</footer>
- </body>
- </html>
- <!-- Google tag (gtag.js) -->
- <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7EEHP5MJJ"></script>
- <script>
-   window.dataLayer = window.dataLayer || [];
-   function gtag(){dataLayer.push(arguments);}
-   gtag('js', new Date());
- 
-   gtag('config', 'G-D7EEHP5MJJ');
- </script>
-+<script>
-+  const toggle = document.getElementById('theme-toggle');
-+  const storedTheme = localStorage.getItem('theme') || 'dark';
-+  document.body.classList.toggle('light', storedTheme === 'light');
-+  toggle.checked = storedTheme === 'light';
-+
-+  toggle.addEventListener('change', () => {
-+    if (toggle.checked) {
-+      document.body.classList.add('light');
-+      localStorage.setItem('theme', 'light');
-+    } else {
-+      document.body.classList.remove('light');
-+      localStorage.setItem('theme', 'dark');
-+    }
-+  });
-+</script>
- 
-EOF
-)
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sayed.Engineer | Portfolio Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient-dark: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #007BFF);
+      --bg-gradient-light: linear-gradient(-45deg, #f2f6ff, #e1e6ef, #d7ddf5, #ffffff);
+      --text-color-dark: #fff;
+      --text-color-light: #000;
+      --button-bg-dark: rgba(255, 255, 255, 0.1);
+      --button-bg-light: rgba(0, 0, 0, 0.1);
+      --button-hover-dark: rgba(255, 255, 255, 0.3);
+      --button-hover-light: rgba(0, 0, 0, 0.2);
+      --container-bg-dark: rgba(255, 255, 255, 0.05);
+      --container-bg-light: rgba(255, 255, 255, 0.6);
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-color-dark);
+      background: var(--bg-gradient-dark);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    body.light {
+      color: var(--text-color-light);
+      background: var(--bg-gradient-light);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.4);
+      transition: 0.4s;
+      border-radius: 34px;
+      backdrop-filter: blur(5px);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    .glass {
+      background: var(--container-bg-dark);
+      backdrop-filter: blur(20px);
+      padding: 3rem 4rem;
+      border-radius: 20px;
+    }
+
+    body.light .glass {
+      background: var(--container-bg-light);
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+    }
+
+    .buttons {
+      background: var(--container-bg-dark);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    body.light .buttons {
+      background: var(--container-bg-light);
+    }
+
+    .buttons a {
+      text-decoration: none;
+      color: inherit;
+      background: var(--button-bg-dark);
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    body.light .buttons a {
+      background: var(--button-bg-light);
+    }
+
+    .buttons a:hover {
+      background: var(--button-hover-dark);
+      transform: translateY(-3px);
+    }
+
+    body.light .buttons a:hover {
+      background: var(--button-hover-light);
+    }
+
+    footer {
+      position: fixed;
+      bottom: 10px;
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    body.light footer {
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.2rem; }
+      .buttons { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="theme-toggle">
+    <label class="switch">
+      <input type="checkbox" id="theme-toggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="glass">
+    <h1>Welcome to Sayed.Engineer</h1>
+    <p>A portfolio hub for engineers</p>
+    <div class="buttons">
+      <a href="https://farook.sayed.engineer" target="_blank" rel="noopener">Farook</a>
+      <a href="https://fazal.sayed.engineer" target="_blank" rel="noopener">Fazal</a>
+    </div>
+  </div>
+  <footer>© 2025 Sayed.Engineer. All rights reserved.</footer>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7EEHP5MJJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-D7EEHP5MJJ');
+  </script>
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const storedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.classList.toggle('light', storedTheme === 'light');
+    toggle.checked = storedTheme === 'light';
+
+    toggle.addEventListener('change', () => {
+      if (toggle.checked) {
+        document.body.classList.add('light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.body.classList.remove('light');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>
