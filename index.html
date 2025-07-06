@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,11 +39,29 @@
       background: var(--bg-gradient-light);
     }
 
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       position: fixed;
       top: 15px;
       left: 15px;
       z-index: 1000;
+    }
+
+    .theme-toggle .icon {
+      font-size: 1.2rem;
+      display: none;
+    }
+
+    .theme-toggle .icon.active {
+      display: inline;
     }
 
     .switch {
@@ -63,10 +80,7 @@
     .slider {
       position: absolute;
       cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background-color: rgba(255, 255, 255, 0.4);
       transition: 0.4s;
       border-radius: 34px;
@@ -102,12 +116,6 @@
 
     body.light .glass {
       background: var(--container-bg-light);
-    }
-
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     h1 {
@@ -163,31 +171,33 @@
       bottom: 10px;
       font-size: 0.9rem;
       color: #ddd;
+      text-align: center;
+      width: 100%;
     }
 
     body.light footer {
       color: #333;
     }
-footer p a {
-  color: #ccc;              /* subtle light gray for dark mode */
-  text-decoration: none;    /* no underline */
-  margin: 0 0.5rem;
-  transition: color 0.3s ease;
-}
 
-footer p a:hover {
-  color: #fff;              /* bright white on hover in dark mode */
-  text-decoration: none;    /* stays clean */
-}
+    footer p a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 0.5rem;
+      transition: color 0.3s ease;
+    }
 
-body.light footer p a {
-  color: #333;              /* dark gray for light mode */
-}
+    footer p a:hover {
+      color: #fff;
+    }
 
-body.light footer p a:hover {
-  color: #007BFF;           /* blue accent on hover in light mode */
-  text-decoration: none;    /* stays clean */
-}
+    body.light footer p a {
+      color: #333;
+    }
+
+    body.light footer p a:hover {
+      color: #007BFF;
+    }
+
     @media (max-width: 600px) {
       h1 { font-size: 2.2rem; }
       .buttons { flex-direction: column; gap: 1rem; }
@@ -200,7 +210,10 @@ body.light footer p a:hover {
       <input type="checkbox" id="theme-toggle">
       <span class="slider"></span>
     </label>
+    <span class="icon sun">☀️</span>
+    <span class="icon moon">🌙</span>
   </div>
+
   <div class="glass">
     <h1>Welcome to Sayed.Engineer</h1>
     <p>A portfolio hub for engineers</p>
@@ -209,16 +222,17 @@ body.light footer p a:hover {
       <a href="https://fazal.sayed.engineer" target="_blank" rel="noopener">Fazal</a>
     </div>
   </div>
-  <footer>
-  <p>© 2025 Sayed.Engineer. All rights reserved.</p>
-  <p>
-    <a href="/about.html">About</a> |
-    <a href="mailto:contact@sayed.engineer">Contact</a> |
-    <a href="https://github.com/Farook-Sayed/sayed.engineer" target="_blank" rel="noopener">GitHub Repo</a>
-  </p>
-</footer>
 
-  <!-- Google tag (gtag.js) -->
+  <footer>
+    <p>© 2025 Sayed.Engineer. All rights reserved.</p>
+    <p>
+      <a href="/about.html">About</a> |
+      <a href="mailto:contact@sayed.engineer">Contact</a> |
+      <a href="https://github.com/Farook-Sayed/sayed.engineer" target="_blank" rel="noopener">GitHub Repo</a>
+    </p>
+  </footer>
+
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7EEHP5MJJ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -226,19 +240,38 @@ body.light footer p a:hover {
     gtag('js', new Date());
     gtag('config', 'G-D7EEHP5MJJ');
   </script>
+
+  <!-- Theme toggle script -->
   <script>
     const toggle = document.getElementById('theme-toggle');
     const storedTheme = localStorage.getItem('theme') || 'dark';
-    document.body.classList.toggle('light', storedTheme === 'light');
+    const body = document.body;
+    const sunIcon = document.querySelector('.theme-toggle .sun');
+    const moonIcon = document.querySelector('.theme-toggle .moon');
+
+    function updateIcons(theme) {
+      if (theme === 'light') {
+        sunIcon.classList.add('active');
+        moonIcon.classList.remove('active');
+      } else {
+        sunIcon.classList.remove('active');
+        moonIcon.classList.add('active');
+      }
+    }
+
+    body.classList.toggle('light', storedTheme === 'light');
     toggle.checked = storedTheme === 'light';
+    updateIcons(storedTheme);
 
     toggle.addEventListener('change', () => {
       if (toggle.checked) {
-        document.body.classList.add('light');
+        body.classList.add('light');
         localStorage.setItem('theme', 'light');
+        updateIcons('light');
       } else {
-        document.body.classList.remove('light');
+        body.classList.remove('light');
         localStorage.setItem('theme', 'dark');
+        updateIcons('dark');
       }
     });
   </script>
