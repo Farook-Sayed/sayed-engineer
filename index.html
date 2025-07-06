@@ -168,7 +168,26 @@
     body.light footer {
       color: #333;
     }
+footer p a {
+  color: #ccc;              /* subtle light gray for dark mode */
+  text-decoration: none;    /* no underline */
+  margin: 0 0.5rem;
+  transition: color 0.3s ease;
+}
 
+footer p a:hover {
+  color: #fff;              /* bright white on hover in dark mode */
+  text-decoration: none;    /* stays clean */
+}
+
+body.light footer p a {
+  color: #333;              /* dark gray for light mode */
+}
+
+body.light footer p a:hover {
+  color: #007BFF;           /* blue accent on hover in light mode */
+  text-decoration: none;    /* stays clean */
+}
     @media (max-width: 600px) {
       h1 { font-size: 2.2rem; }
       .buttons { flex-direction: column; gap: 1rem; }
