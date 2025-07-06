@@ -3,40 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sayed.Engineer | Portfolio Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Sayed.Engineer</title>
   <style>
     :root {
-      --bg-gradient-dark: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #007BFF);
-      --bg-gradient-light: linear-gradient(-45deg, #f2f6ff, #e1e6ef, #d7ddf5, #ffffff);
+      --bg-gradient-dark: linear-gradient(135deg, #1e3c72, #2a5298);
+      --bg-gradient-light: linear-gradient(135deg, #dfe9f3, #ffffff);
       --text-color-dark: #fff;
       --text-color-light: #000;
-      --button-bg-dark: rgba(255, 255, 255, 0.1);
-      --button-bg-light: rgba(0, 0, 0, 0.1);
-      --button-hover-dark: rgba(255, 255, 255, 0.3);
-      --button-hover-light: rgba(0, 0, 0, 0.2);
       --container-bg-dark: rgba(255, 255, 255, 0.05);
-      --container-bg-light: rgba(255, 255, 255, 0.6);
-    }
-
-    body {
-      margin: 0;
-      height: 100vh;
-      font-family: 'Inter', sans-serif;
-      color: var(--text-color-dark);
-      background: var(--bg-gradient-dark);
-      background-size: 400% 400%;
-      animation: gradientMove 15s ease infinite;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    body.light {
-      color: var(--text-color-light);
-      background: var(--bg-gradient-light);
+      --container-bg-light: rgba(255, 255, 255, 0.7);
+      --button-bg-dark: rgba(255, 255, 255, 0.1);
+      --button-hover-dark: rgba(255, 255, 255, 0.2);
+      --button-bg-light: rgba(0, 0, 0, 0.05);
+      --button-hover-light: rgba(0, 0, 0, 0.1);
     }
 
     @keyframes gradientMove {
@@ -45,111 +24,60 @@
       100% { background-position: 0% 50%; }
     }
 
-    .theme-toggle {
+    body {
+      margin: 0;
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 8px;
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1000;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      background: var(--bg-gradient-dark);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      color: var(--text-color-dark);
+      transition: background 0.5s ease, color 0.5s ease;
+      padding: 80px 20px 40px;
     }
 
-    .theme-toggle .icon {
-      font-size: 1.2rem;
-      display: none;
-    }
-
-    .theme-toggle .icon.active {
-      display: inline;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(255, 255, 255, 0.4);
-      transition: 0.4s;
-      border-radius: 34px;
-      backdrop-filter: blur(5px);
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-    }
-
-    input:checked + .slider {
-      background-color: rgba(0,0,0,0.4);
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(26px);
+    body.light {
+      background: var(--bg-gradient-light);
+      color: var(--text-color-light);
     }
 
     .glass {
       background: var(--container-bg-dark);
       backdrop-filter: blur(20px);
-      padding: 3rem 4rem;
       border-radius: 20px;
+      padding: 3rem 2rem;
+      max-width: 600px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 40px;
+      transition: background 0.5s ease;
     }
 
     body.light .glass {
       background: var(--container-bg-light);
     }
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    p {
-      margin-bottom: 2rem;
-      font-size: 1.2rem;
-    }
-
     .buttons {
-      background: var(--container-bg-dark);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      padding: 2rem 3rem;
       display: flex;
-      gap: 2rem;
       flex-wrap: wrap;
       justify-content: center;
-    }
-
-    body.light .buttons {
-      background: var(--container-bg-light);
+      gap: 1rem;
+      margin: 2rem 0;
     }
 
     .buttons a {
-      text-decoration: none;
-      color: inherit;
-      background: var(--button-bg-dark);
+      display: inline-block;
       padding: 1rem 2rem;
       border-radius: 8px;
+      text-decoration: none;
       font-weight: 600;
+      color: inherit;
+      background: var(--button-bg-dark);
       transition: background 0.3s ease, transform 0.3s ease;
     }
 
@@ -166,112 +94,127 @@
       background: var(--button-hover-light);
     }
 
+    .toggle-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-container input[type="checkbox"] {
+      width: 50px;
+      height: 24px;
+      appearance: none;
+      background: #ccc;
+      border-radius: 12px;
+      position: relative;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-container input[type="checkbox"]::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-container input[type="checkbox"]:checked {
+      background: #666;
+    }
+
+    .toggle-container input[type="checkbox"]:checked::before {
+      transform: translateX(26px);
+    }
+
+    .toggle-container span {
+      margin-left: 10px;
+      font-size: 1.2rem;
+    }
+
     footer {
-      position: fixed;
-      bottom: 10px;
       font-size: 0.9rem;
-      color: #ddd;
       text-align: center;
-      width: 100%;
+      padding: 1rem 0;
     }
 
-    body.light footer {
-      color: #333;
+    footer p {
+      margin: 0.5rem 0;
     }
 
-    footer p a {
-      color: #ccc;
+    footer a {
+      color: inherit;
       text-decoration: none;
       margin: 0 0.5rem;
       transition: color 0.3s ease;
     }
 
-    footer p a:hover {
+    footer a:hover {
       color: #fff;
     }
 
-    body.light footer p a {
-      color: #333;
-    }
-
-    body.light footer p a:hover {
+    body.light footer a:hover {
       color: #007BFF;
     }
 
     @media (max-width: 600px) {
-      h1 { font-size: 2.2rem; }
-      .buttons { flex-direction: column; gap: 1rem; }
+      .buttons { flex-direction: column; width: 100%; }
+      footer p a { display: inline-block; margin: 0.5rem; }
     }
   </style>
 </head>
-<body class="dark">
-  <div class="theme-toggle">
-    <label class="switch">
-      <input type="checkbox" id="theme-toggle">
-      <span class="slider"></span>
-    </label>
-    <span class="icon sun">☀️</span>
-    <span class="icon moon">🌙</span>
+<body>
+  <div class="toggle-container">
+    <input type="checkbox" id="theme-toggle" />
+    <span id="theme-icon">🌙</span>
   </div>
 
   <div class="glass">
-    <h1>Welcome to Sayed.Engineer</h1>
+    <h1>Welcome to<br>Sayed.Engineer</h1>
     <p>A portfolio hub for engineers</p>
     <div class="buttons">
-      <a href="https://farook.sayed.engineer" target="_blank" rel="noopener">Farook</a>
-      <a href="https://fazal.sayed.engineer" target="_blank" rel="noopener">Fazal</a>
+      <a href="https://farook.sayed.engineer">Farook</a>
+      <a href="https://fazal.sayed.engineer">Fazal</a>
     </div>
+    <p>© 2025 Sayed.Engineer. All rights reserved.</p>
   </div>
 
   <footer>
-    <p>© 2025 Sayed.Engineer. All rights reserved.</p>
     <p>
-      <a href="/about.html">About</a> |
+      <a href="#about">About</a> |
       <a href="mailto:contact@sayed.engineer">Contact</a> |
-      <a href="https://github.com/Farook-Sayed/sayed.engineer" target="_blank" rel="noopener">GitHub Repo</a>
+      <a href="https://github.com/Farook-Sayed/sayed.engineer" target="_blank">GitHub Repo</a>
     </p>
   </footer>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7EEHP5MJJ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-D7EEHP5MJJ');
-  </script>
-
-  <!-- Theme toggle script -->
   <script>
     const toggle = document.getElementById('theme-toggle');
-    const storedTheme = localStorage.getItem('theme') || 'dark';
-    const body = document.body;
-    const sunIcon = document.querySelector('.theme-toggle .sun');
-    const moonIcon = document.querySelector('.theme-toggle .moon');
+    const icon = document.getElementById('theme-icon');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    function updateIcons(theme) {
-      if (theme === 'light') {
-        sunIcon.classList.add('active');
-        moonIcon.classList.remove('active');
-      } else {
-        sunIcon.classList.remove('active');
-        moonIcon.classList.add('active');
-      }
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !prefersDark)) {
+      document.body.classList.add('light');
+      toggle.checked = true;
+      icon.textContent = '☀️';
+    } else {
+      icon.textContent = '🌙';
     }
 
-    body.classList.toggle('light', storedTheme === 'light');
-    toggle.checked = storedTheme === 'light';
-    updateIcons(storedTheme);
-
     toggle.addEventListener('change', () => {
-      if (toggle.checked) {
-        body.classList.add('light');
+      document.body.classList.toggle('light');
+      if (document.body.classList.contains('light')) {
+        icon.textContent = '☀️';
         localStorage.setItem('theme', 'light');
-        updateIcons('light');
       } else {
-        body.classList.remove('light');
+        icon.textContent = '🌙';
         localStorage.setItem('theme', 'dark');
-        updateIcons('dark');
       }
     });
   </script>
