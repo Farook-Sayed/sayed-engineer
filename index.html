@@ -1,43 +1,75 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Welcome to Sayed.Engineer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sayed.Engineer</title>
   <style>
     :root {
-      --bg: #f0f4ff;
-      --text: #111;
-      --link: #007bff;
-      --glass-bg: rgba(255, 255, 255, 0.6);
+      --text-color: #111827;
+      --link-color: #1d4ed8;
+      --link-hover: #2563eb;
     }
 
-    [data-theme="dark"] {
-      --bg: #0a0a0a;
-      --text: #f8f8f8;
-      --link: #66b2ff;
-      --glass-bg: rgba(20, 20, 20, 0.6);
-    }
-
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: sans-serif;
-      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      color: var(--text-color);
       display: flex;
       flex-direction: column;
-      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      transition: background 0.5s, color 0.5s;
     }
 
-    a {
-      color: var(--link);
+    .dark {
+      --text-color: #ffffff;
+      --link-color: #60a5fa;
+      --link-hover: #93c5fd;
+      background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      margin: auto;
+    }
+
+    .dark .glass {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    p {
+      margin: 1rem 0;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+
+    .buttons a {
+      padding: 0.75rem 1.5rem;
+      background: #e5e7eb;
+      border-radius: 8px;
       text-decoration: none;
+      color: var(--text-color);
+      font-weight: bold;
+      transition: background 0.3s;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .buttons a:hover {
+      background: #d1d5db;
     }
 
     .toggle-container {
@@ -49,103 +81,45 @@
       gap: 0.5rem;
     }
 
-    .toggle {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }
-
-    .toggle input {
-      display: none;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #ccc;
-      border-radius: 24px;
-      transition: background-color 0.3s ease;
-    }
-
-    .slider:before {
-      content: "";
-      position: absolute;
-      height: 18px; width: 18px;
-      left: 3px; bottom: 3px;
-      background-color: white;
-      border-radius: 50%;
-      transition: transform 0.4s ease;
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
-
-    #toggle-icon {
-      font-size: 1.2rem;
-    }
-
-    .glass {
-      margin: auto;
-      padding: 3rem;
-      max-width: 500px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .buttons {
-      margin: 2rem 0;
-    }
-
-    .buttons a {
-      display: inline-block;
-      margin: 0.5rem;
-      padding: 1rem 2rem;
-      background: #e0e0e0;
-      border-radius: 8px;
-      font-weight: bold;
-      color: inherit;
-      text-decoration: none;
+    .toggle-container input {
+      transform: scale(1.5);
     }
 
     footer {
       text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.9rem;
       margin-top: auto;
+      padding: 1rem;
     }
 
-    footer nav {
-      margin-top: 0.5rem;
-    }
-
-    footer nav a {
+    footer a {
+      color: var(--link-color);
+      text-decoration: none;
       margin: 0 0.5rem;
+      transition: color 0.3s;
     }
 
-    @media(max-width: 600px) {
-      .glass {
-        margin: 2rem;
-        padding: 2rem 1rem;
-      }
-      footer {
-        font-size: 0.85rem;
+    footer a:hover {
+      color: var(--link-hover);
+    }
+
+    footer p {
+      margin: 0.5rem 0 0 0;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .buttons {
+        flex-direction: column;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Theme toggle -->
+  <!-- Dark/Light toggle -->
   <div class="toggle-container">
-    <label class="toggle">
-      <input type="checkbox" id="theme-toggle">
-      <span class="slider"></span>
-    </label>
-    <span id="toggle-icon">🌞</span>
+    <input type="checkbox" id="theme-toggle" />
+    <span id="theme-icon">🌞</span>
   </div>
 
   <!-- Main content -->
@@ -153,40 +127,46 @@
     <h1>Welcome to<br>Sayed.Engineer</h1>
     <p>A portfolio hub for engineers</p>
     <div class="buttons">
-      <a href="/farook/">Farook</a>
-      <a href="/fazal/">Fazal</a>
+      <a href="https://farook.sayed.engineer">Farook</a>
+      <a href="https://fazal.sayed.engineer">Fazal</a>
     </div>
   </div>
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 Sayed.Engineer. All rights reserved.</p>
-    <nav>
-      <a href="#">About</a> |
-      <a href="mailto:contact@sayed.engineer">Contact</a> |
+    <div>
+      <a href="#about">About</a> | 
+      <a href="mailto:contact@sayed.engineer">Contact</a> | 
       <a href="https://github.com/Farook-Sayed/sayed.engineer" target="_blank">GitHub Repo</a>
-    </nav>
+    </div>
+    <p>© 2025 Sayed.Engineer. All rights reserved.</p>
   </footer>
 
-  <!-- Theme toggle script -->
+  <!-- Theme Script -->
   <script>
     const toggle = document.getElementById('theme-toggle');
-    const icon = document.getElementById('toggle-icon');
+    const icon = document.getElementById('theme-icon');
 
-    // Set theme based on localStorage or system
-    const storedTheme = localStorage.getItem('theme');
+    // Set theme based on system preference at load
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const currentTheme = storedTheme || (prefersDark ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', currentTheme);
+    const savedTheme = localStorage.getItem('theme');
 
-    toggle.checked = currentTheme === 'dark';
-    icon.textContent = currentTheme === 'dark' ? '🌙' : '🌞';
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.body.classList.add('dark');
+      toggle.checked = true;
+      icon.textContent = '🌙';
+    }
 
     toggle.addEventListener('change', () => {
-      const theme = toggle.checked ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      icon.textContent = theme === 'dark' ? '🌙' : '🌞';
+      if (toggle.checked) {
+        document.body.classList.add('dark');
+        icon.textContent = '🌙';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.body.classList.remove('dark');
+        icon.textContent = '🌞';
+        localStorage.setItem('theme', 'light');
+      }
     });
   </script>
 </body>
