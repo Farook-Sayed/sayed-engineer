@@ -83,11 +83,15 @@
       text-align: center;
       backdrop-filter: blur(10px);
       box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
 
     body.dark .glass {
       background: var(--glass-bg-dark);
+    }
+
+    .glass:hover {
+      transform: translateY(-5px) scale(1.02);
     }
 
     h1 {
@@ -108,7 +112,8 @@
       border-radius: 10px;
       color: inherit;
       font-weight: bold;
-      transition: background 0.3s;
+      display: inline-block;
+      transition: transform 0.3s ease, background 0.3s;
     }
 
     body.dark .buttons a {
@@ -116,6 +121,7 @@
     }
 
     .buttons a:hover {
+      transform: scale(1.05);
       background: rgba(255, 255, 255, 0.5);
     }
 
@@ -207,7 +213,6 @@
       }
     });
 
-    // Load theme from storage or system preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       setTheme(savedTheme);
@@ -217,7 +222,6 @@
       setTheme('light');
     }
 
-    // Listen to system changes in real-time
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
       if (!localStorage.getItem('theme')) {
         setTheme(e.matches ? 'dark' : 'light');
