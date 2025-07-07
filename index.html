@@ -179,35 +179,41 @@
 
   <!-- Final theme script -->
   <script>
-    const toggle = document.getElementById('theme-toggle');
-    const icon = document.getElementById('theme-icon');
+  const toggle = document.getElementById('theme-toggle');
+  const icon = document.getElementById('theme-icon');
 
-    // Apply stored theme or device preference
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+  const themeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = themeMedia.matches;
 
-    document.body.classList.toggle('dark', currentTheme === 'dark');
-    toggle.checked = currentTheme === 'dark';
-    icon.textContent = currentTheme === 'dark' ? '🌙' : '🌞';
+  let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+  document.body.classList.toggle('dark', currentTheme === 'dark');
+  toggle.checked = currentTheme === 'dark';
+  icon.textContent = currentTheme === 'dark' ? '🌙' : '🌞';
 
-    // Listen for toggle switch
-    toggle.addEventListener('change', () => {
-      const theme = toggle.checked ? 'dark' : 'light';
-      document.body.classList.toggle('dark', theme === 'dark');
-      icon.textContent = theme === 'dark' ? '🌙' : '🌞';
-      localStorage.setItem('theme', theme);
-    });
+  toggle.addEventListener('change', () => {
+    const theme = toggle.checked ? 'dark' : 'light';
+    document.body.classList.toggle('dark', theme === 'dark');
+    icon.textContent = theme === 'dark' ? '🌙' : '🌞';
+    localStorage.setItem('theme', theme);
+  });
 
-    // Listen for device theme changes, if no manual override
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      if (!localStorage.getItem('theme')) {
-        const newTheme = e.matches ? 'dark' : 'light';
-        document.body.classList.toggle('dark', newTheme === 'dark');
-        toggle.checked = newTheme === 'dark';
-        icon.textContent = newTheme === 'dark' ? '🌙' : '🌞';
-      }
-    });
-  </script>
+  // Function to handle changes
+  function handleThemeChange(e) {
+    if (!localStorage.getItem('theme')) {
+      const newTheme = e.matches ? 'dark' : 'light';
+      document.body.classList.toggle('dark', newTheme === 'dark');
+      toggle.checked = newTheme === 'dark';
+      icon.textContent = newTheme === 'dark' ? '🌙' : '🌞';
+    }
+  }
+
+  // Use addEventListener if available
+  if (themeMedia.addEventListener) {
+    themeMedia.addEventListener('change', handleThemeChange);
+  } else if (themeMedia.addListener) {
+    themeMedia.addListener(handleThemeChange);
+  }
+</script>
 </body>
 </html>
