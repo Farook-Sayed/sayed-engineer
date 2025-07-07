@@ -1,251 +1,192 @@
-<script>
-  const toggle = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
-
-  // Detect system preference on first load
-  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  if (localStorage.getItem('theme') === 'dark' || 
-      (!localStorage.getItem('theme') && systemPrefersDark)) {
-    document.body.classList.add('dark');
-    toggle.checked = true;
-    themeIcon.textContent = '🌙';
-  } else {
-    document.body.classList.remove('dark');
-    toggle.checked = false;
-    themeIcon.textContent = '🌞';
-  }
-
-  // Keep your toggle listener as it is
-  toggle.addEventListener('change', () => {
-    if (toggle.checked) {
-      document.body.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      themeIcon.textContent = '🌙';
-    } else {
-      document.body.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-      themeIcon.textContent = '🌞';
-    }
-  });
-</script>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sayed.Engineer</title>
+  <title>Welcome to Sayed.Engineer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg-gradient-dark: linear-gradient(135deg, #1e3c72, #2a5298);
-      --bg-gradient-light: linear-gradient(135deg, #dfe9f3, #ffffff);
-      --text-color-dark: #fff;
-      --text-color-light: #000;
-      --container-bg-dark: rgba(255, 255, 255, 0.05);
-      --container-bg-light: rgba(255, 255, 255, 0.7);
-      --button-bg-dark: rgba(255, 255, 255, 0.1);
-      --button-hover-dark: rgba(255, 255, 255, 0.2);
-      --button-bg-light: rgba(0, 0, 0, 0.05);
-      --button-hover-light: rgba(0, 0, 0, 0.1);
+      --bg: #f0f4ff;
+      --text: #111;
+      --link: #007bff;
+      --glass-bg: rgba(255, 255, 255, 0.6);
     }
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    [data-theme="dark"] {
+      --bg: #0a0a0a;
+      --text: #f8f8f8;
+      --link: #66b2ff;
+      --glass-bg: rgba(20, 20, 20, 0.6);
     }
 
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Inter', sans-serif;
-      text-align: center;
-      background: var(--bg-gradient-dark);
-      background-size: 400% 400%;
-      animation: gradientMove 15s ease infinite;
-      color: var(--text-color-dark);
-      transition: background 0.5s ease, color 0.5s ease;
-      padding: 80px 20px 40px;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    body.light {
-      background: var(--bg-gradient-light);
-      color: var(--text-color-light);
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .toggle-container {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .toggle input {
+      display: none;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      border-radius: 24px;
+      transition: background-color 0.3s ease;
+    }
+
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 18px; width: 18px;
+      left: 3px; bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: transform 0.4s ease;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    #toggle-icon {
+      font-size: 1.2rem;
     }
 
     .glass {
-      background: var(--container-bg-dark);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 3rem 2rem;
-      max-width: 600px;
-      width: 100%;
-      box-sizing: border-box;
-      margin-bottom: 40px;
-      transition: background 0.5s ease;
-    }
-
-    body.light .glass {
-      background: var(--container-bg-light);
+      margin: auto;
+      padding: 3rem;
+      max-width: 500px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      text-align: center;
     }
 
     .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
       margin: 2rem 0;
     }
 
     .buttons a {
       display: inline-block;
+      margin: 0.5rem;
       padding: 1rem 2rem;
+      background: #e0e0e0;
       border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
+      font-weight: bold;
       color: inherit;
-      background: var(--button-bg-dark);
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    body.light .buttons a {
-      background: var(--button-bg-light);
-    }
-
-    .buttons a:hover {
-      background: var(--button-hover-dark);
-      transform: translateY(-3px);
-    }
-
-    body.light .buttons a:hover {
-      background: var(--button-hover-light);
-    }
-
-    .toggle-container {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      display: flex;
-      align-items: center;
-    }
-
-    .toggle-container input[type="checkbox"] {
-      width: 50px;
-      height: 24px;
-      appearance: none;
-      background: #ccc;
-      border-radius: 12px;
-      position: relative;
-      outline: none;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .toggle-container input[type="checkbox"]::before {
-      content: "";
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 20px;
-      height: 20px;
-      background: #fff;
-      border-radius: 50%;
-      transition: transform 0.3s ease;
-    }
-
-    .toggle-container input[type="checkbox"]:checked {
-      background: #666;
-    }
-
-    .toggle-container input[type="checkbox"]:checked::before {
-      transform: translateX(26px);
-    }
-
-    .toggle-container span {
-      margin-left: 10px;
-      font-size: 1.2rem;
+      text-decoration: none;
     }
 
     footer {
-      font-size: 0.9rem;
       text-align: center;
-      padding: 1rem 0;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      margin-top: auto;
     }
 
-    footer p {
-      margin: 0.5rem 0;
+    footer nav {
+      margin-top: 0.5rem;
     }
 
-    footer a {
-      color: inherit;
-      text-decoration: none;
+    footer nav a {
       margin: 0 0.5rem;
-      transition: color 0.3s ease;
     }
 
-    footer a:hover {
-      color: #fff;
-    }
-
-    body.light footer a:hover {
-      color: #007BFF;
-    }
-
-    @media (max-width: 600px) {
-      .buttons { flex-direction: column; width: 100%; }
-      footer p a { display: inline-block; margin: 0.5rem; }
+    @media(max-width: 600px) {
+      .glass {
+        margin: 2rem;
+        padding: 2rem 1rem;
+      }
+      footer {
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Theme toggle -->
   <div class="toggle-container">
-    <input type="checkbox" id="theme-toggle" />
-    <span id="theme-icon">🌙</span>
+    <label class="toggle">
+      <input type="checkbox" id="theme-toggle">
+      <span class="slider"></span>
+    </label>
+    <span id="toggle-icon">🌞</span>
   </div>
 
+  <!-- Main content -->
   <div class="glass">
-  <h1>Welcome to<br>Sayed.Engineer</h1>
-  <p>A portfolio hub</p>
-  <div class="buttons">
-    <a href="https://farook.sayed.engineer">Farook</a>
-    <a href="https://fazal.sayed.engineer">Fazal</a>
+    <h1>Welcome to<br>Sayed.Engineer</h1>
+    <p>A portfolio hub for engineers</p>
+    <div class="buttons">
+      <a href="/farook/">Farook</a>
+      <a href="/fazal/">Fazal</a>
+    </div>
   </div>
-</div>
 
-<footer>
-  <p>
-    <a href="#about">About</a> |
-    <a href="mailto:contact@sayed.engineer">Contact</a> |
-    <a href="https://github.com/Farook-Sayed/sayed.engineer" target="_blank">GitHub Repo</a>
-  </p>
-  <p>© 2025 Sayed.Engineer. All rights reserved.</p>
-</footer>
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Sayed.Engineer. All rights reserved.</p>
+    <nav>
+      <a href="#">About</a> |
+      <a href="mailto:contact@sayed.engineer">Contact</a> |
+      <a href="https://github.com/Farook-Sayed/sayed.engineer" target="_blank">GitHub Repo</a>
+    </nav>
+  </footer>
+
+  <!-- Theme toggle script -->
   <script>
     const toggle = document.getElementById('theme-toggle');
-    const icon = document.getElementById('theme-icon');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const icon = document.getElementById('toggle-icon');
 
-    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !prefersDark)) {
-      document.body.classList.add('light');
-      toggle.checked = true;
-      icon.textContent = '☀️';
-    } else {
-      icon.textContent = '🌙';
-    }
+    // Set theme based on localStorage or system
+    const storedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const currentTheme = storedTheme || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    toggle.checked = currentTheme === 'dark';
+    icon.textContent = currentTheme === 'dark' ? '🌙' : '🌞';
 
     toggle.addEventListener('change', () => {
-      document.body.classList.toggle('light');
-      if (document.body.classList.contains('light')) {
-        icon.textContent = '☀️';
-        localStorage.setItem('theme', 'light');
-      } else {
-        icon.textContent = '🌙';
-        localStorage.setItem('theme', 'dark');
-      }
+      const theme = toggle.checked ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      icon.textContent = theme === 'dark' ? '🌙' : '🌞';
     });
   </script>
 </body>
