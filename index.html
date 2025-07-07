@@ -1,3 +1,34 @@
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+
+  // Detect system preference on first load
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  if (localStorage.getItem('theme') === 'dark' || 
+      (!localStorage.getItem('theme') && systemPrefersDark)) {
+    document.body.classList.add('dark');
+    toggle.checked = true;
+    themeIcon.textContent = '🌙';
+  } else {
+    document.body.classList.remove('dark');
+    toggle.checked = false;
+    themeIcon.textContent = '🌞';
+  }
+
+  // Keep your toggle listener as it is
+  toggle.addEventListener('change', () => {
+    if (toggle.checked) {
+      document.body.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      themeIcon.textContent = '🌙';
+    } else {
+      document.body.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      themeIcon.textContent = '🌞';
+    }
+  });
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
